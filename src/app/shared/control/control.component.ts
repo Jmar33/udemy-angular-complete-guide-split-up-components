@@ -1,4 +1,4 @@
-import { Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -12,19 +12,31 @@ import { Component, contentChild, ContentChild, ElementRef, HostBinding, HostLis
     '(click)': 'onClick()'
   }
 })
-export class ControlComponent {
+export class ControlComponent implements OnInit, AfterContentInit {
   @HostBinding('class') className = 'control';
-  // @ContentChild('input') control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
-  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
+  @ContentChild('input') control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+  // private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
 
 
   label = input.required<string>();
   private el = inject(ElementRef);
 
+  ngOnInit(): void {
+    console.log('INIT');
+    console.log(this.control);
+  }
+
+  ngAfterContentInit(): void {
+    console.log('AFTER CONTENT INIT');
+    console.log(this.control)
+  }
+
+
   onClick(){
     console.log('Clicked!')
     console.log(this.el);
-    console.log(this.control());
+    // console.log(this.control());
+    console.log(this.control);
   }
 
 }
