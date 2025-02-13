@@ -3,7 +3,7 @@
     <!-- Is possible to use some speacial variables like $first $count and $last -->
     @for(ticket of tickets; track ticket.id){
       <li>
-        <app-ticket [data]="ticket" /> 
+        <app-ticket [data]="ticket" (close)="onCloseTicket(ticket.id)" /> 
       </li>
     }@empty {
       <p>No tickets available</p>
